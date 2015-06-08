@@ -26,11 +26,12 @@
       var $console = $("#console");
       var $addOnly = $("#addOnly");
       var addedRows = 0;
+	  var fundName = "tgxq2015";
 
       $container.handsontable({
         startRows : 1,
         startCols : 2,
-        colHeaders : [ "Date", "净资产", "持仓市值", "上证指数" ],
+        colHeaders : [ "Date", "净值", "上证指数" ],
         columnSorting : true,
         //removeRowPlugin : true,
         rowHeaders : true,
@@ -38,9 +39,6 @@
         columns : [ {
           type : 'date',
           dateFormat : 'yymmdd'
-        }, {
-          type : 'numeric',
-          format : '0,0.00'
         }, {
           type : 'numeric',
           format : '0,0.00'
@@ -74,7 +72,7 @@
       
       function load() {
         $console.text('Loading...');
-        $.getJSON('../data.php?d=zongdig1&callback=?', function(data) {
+        $.getJSON('../data.php?d=' + fundName + '&callback=?', function(data) {
           data.sort(function(a, b) {
             return (a[0] < b[0]) ? 1 : -1;
           });
@@ -102,8 +100,7 @@
 
       function isValidate(data) {
         if (data[0] != null && data[0] != "" && data[1] != null
-            && data[1] != "" && data[2] != null && data[2] != ""
-            && data[3] != null && data[3] != "") {
+            && data[1] != "" && data[2] != null && data[2] != "") {
           return true;
         }
         return false;
@@ -131,7 +128,7 @@
         }
 
         $.ajax({
-          url : "save.php?f=zongdig1",
+          url : "save.php?f=" + fundName,
           data : {"data":partOfData},
           dataType : 'text',
           type : 'POST',

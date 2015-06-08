@@ -7,63 +7,52 @@
 <script type="text/javascript"
 	src="js/jquery-ui/js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="js/highstocks.js"></script>
-<!--
-<script type="text/javascript" src="js/highchart_dark_green.js"></script>
-<script type="text/javascript" src="js/highchart_dark_blue.js"></script>
-<script type="text/javascript" src="js/highchart_gray.js"></script>
-<script type="text/javascript" src="js/highchart_grid.js"></script>
--->
 <script type="text/javascript" src="js/exporting.js"></script>
 </head>
 <body>
 	<div id="container" style="height: 650px; min-width: 500px"></div>
-	<script>$(function () {
-	    $.getJSON('data.php?d=tgxq2015&callback=?', function (data) {
+	<script>
+	  var fundName = "tgxq2015";
+	  $(function () {
+	    $.getJSON('data.php?d=' + fundName + '&callback=?', function (data) {
 	        if (data.length <= 0) {
 	            return;
 	        }
 	        data.sort(function(a,b) {return (a[0]<b[0])?-1:1;});
-	        assetBase = data[0][1];
-	        shBase = data[0][3];
-	        if (assetBase == 0 || shBase == 0) {
+            var netValueBase = data[0][1];
+	        var refIdxBase = data[0][2];
+	        if (refIdxBase == 0) {
 	            return;
 	        }
-	        var assetD = [],
-	            shD = [],
-	            vol = [];
+	        var netValueD = [], refIdxD = [];
 	        for (var i = 0; i < data.length; i++) {
-	            if (data[i][0] == "" || data[i][1] == "" || data[i][2] == "" || data[i][3] == "") continue;
+	            if (data[i][0] == "" || data[i][1] == "" || data[i][2] == "") continue;
 	            var d = $.datepicker.parseDate('yymmdd', data[i][0]);
 	            var dut = d.getTime() + 8 * 3600000;
-	            // assetD
-	            assetD[i] = {};
-	            assetD[i].x = dut;
-	            assetD[i].y = (data[i][1] - assetBase) / assetBase;
-	            assetD[i].name = 'nv';
-	            assetD[i].absraw = data[i][1] / assetBase;
-				assetD[i].abs = Highcharts.numberFormat(assetD[i].absraw, 3);
-	            assetD[i].percent = Highcharts.numberFormat(assetD[i].y * 100, 2);
+	            // netValueD
+	            netValueD[i] = {};
+	            netValueD[i].x = dut;
+	            netValueD[i].y = data[i][1];
+	            netValueD[i].name = 'nv';
+	            netValueD[i].absraw = data[i][1] / netValueBase;
+				netValueD[i].abs = Highcharts.numberFormat(netValueD[i].absraw, 3);
+	            netValueD[i].percent = Highcharts.numberFormat(netValueD[i].y * 100, 2);
 	            if (i == 0) {
-	                assetD[i].percentToPrev = 0;
+	                netValueD[i].percentToPrev = 0;
 	            } else {
-	                assetD[i].percentToPrev = Highcharts.numberFormat((assetD[i].absraw - assetD[i - 1].absraw) * 100 / assetD[i - 1].absraw, 2);
+	                netValueD[i].percentToPrev = Highcharts.numberFormat((netValueD[i].absraw - netValueD[i - 1].absraw) * 100 / netValueD[i - 1].absraw, 2);
 				}
-	            // vol
-	            vol[i] = {};
-	            vol[i].x = dut;
-	            vol[i].y = Math.round(data[i][2] * 100 / data[i][1]) / 10;
-	            vol[i].name = 'vol';
-	            // shD
-	            shD[i] = {};
-	            shD[i].x = dut;
-	            shD[i].y = (data[i][3] - shBase) / shBase;
-	            shD[i].name = 'idx';
-	            shD[i].abs = data[i][3];
-	            shD[i].percent = Highcharts.numberFormat(shD[i].y * 100, 2);
+	            // refIdxD
+	            refIdxD[i] = {};
+	            refIdxD[i].x = dut;
+	            refIdxD[i].y = (data[i][2] - refIdxBase) / refIdxBase;
+	            refIdxD[i].name = 'idx';
+	            refIdxD[i].abs = data[i][2];
+	            refIdxD[i].percent = Highcharts.numberFormat(refIdxD[i].y * 100, 2);
 	            if (i == 0) {
-	                shD[i].percentToPrev = 0;
+	                refIdxD[i].percentToPrev = 0;
 	            } else {
-	                shD[i].percentToPrev = Highcharts.numberFormat((data[i][3] - data[i - 1][3]) * 100 / data[i - 1][3], 2);
+	                refIdxD[i].percentToPrev = Highcharts.numberFormat((data[i][2] - data[i - 1][2]) * 100 / data[i - 1][2], 2);
 	            }
 	        }
 
@@ -92,33 +81,17 @@
 	                title: {
 	                    text: 'Net Value'
 	                },
-	                height: 300,
 	                lineWidth: 2,
 	                labels: {
 	                    formatter: function () {
 	                        return this.value * 100 + '%';
 	                    }
 	                }
-	            }, {
-	                title: {
-	                    text: 'Volume'
-	                },
-	                top: 400,
-	                height: 100,
-	                offset: 0,
-	                lineWidth: 2,
-	                min: 0,
-	                max: 10.001,
-	                labels: {
-	                    formatter: function () {
-	                        return this.value;
-	                    }
-	                }
 	            }],
 
 	            series: [{
 	                name: '净　　值',
-	                data: assetD,
+	                data: netValueD,
 	                marker: {
 	                    enabled: true,
 	                    radius: 3
@@ -128,7 +101,7 @@
 	                }
 	            }, {
 	                name: '上证指数',
-	                data: shD,
+	                data: refIdxD,
 	                marker: {
 	                    enabled: true,
 	                    radius: 3
@@ -136,11 +109,6 @@
 	                tooltip: {
 	                    valueDecimals: 3
 	                }
-	            }, {
-	                type: 'column',
-	                name: 'Volume',
-	                data: vol,
-	                yAxis: 1
 	            }],
 
 	            tooltip: {
@@ -165,10 +133,6 @@
 	                                s += 'red';
 	                            }
 	                            s += '">' + percent + '%</span>)';
-	                        } else if (pointType == 'vol') {
-	                            s += '<br/>------------------------';
-	                            s += '<br/>仓　　位：';
-	                            s += this.points[i].point.y + '成';
 	                        } else {
 	                            continue;
 	                        }
