@@ -4,3 +4,68 @@ body{
   font:12px/17px Arial, sans-serif;
   background:#f9f9f9;
 }
+
+.content {
+}
+
+.ui-dialog {
+	z-index: 1000 !important;
+}
+
+.handsontable {
+/*	color: #000;*/
+/*	z-index: 2;*/
+}
+
+.handsontable .currentRow {
+    background-color: #E7E8EF;
+}
+
+.handsontable th, .handsontable td {
+	font-size: 14px;
+	vertical-align: middle;
+}
+
+.handsontable td.searchResult {
+	background-color: #FF9933;
+	color: #000000;
+}
+
+.handsontable .htDimmed {
+	color: #555;
+	/*font-weight: bold;*/
+}
+
+.columnFilter {
+	position: absolute;
+	bottom: 0;
+}
+
+.columnFilter input {
+	width: 95%;
+	margin: 1px 0;
+}
+
+#addstocks {
+	width:300px;
+	height: 130px;
+}
+
+#cmdBar {
+	margin: 0 0 20px 0;
+}
+
+#console {
+	margin: 0 0 0 10px;
+}
+
+#divOverlay {
+	background-color: rgba(0, 0, 0, 0.6);
+	z-index: 999;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
