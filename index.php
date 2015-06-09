@@ -41,15 +41,14 @@ $(function () {
 	  // netValueD
 	  netValueD[i] = {};
 	  netValueD[i].x = dut;
-	  netValueD[i].y = data[i][1];
+	  netValueD[i].y = (data[i][1] - netValueBase) / netValueBase;
 	  netValueD[i].name = 'nv';
-	  netValueD[i].absraw = data[i][1] / netValueBase;
-	  netValueD[i].abs = Highcharts.numberFormat(netValueD[i].absraw, 3);
+	  netValueD[i].abs = Highcharts.numberFormat(data[i][1], 5);
 	  netValueD[i].percent = Highcharts.numberFormat(netValueD[i].y * 100, 2);
 	  if (i == 0) {
 	    netValueD[i].percentToPrev = 0;
 	  } else {
-	    netValueD[i].percentToPrev = Highcharts.numberFormat((netValueD[i].absraw - netValueD[i - 1].absraw) * 100 / netValueD[i - 1].absraw, 2);
+	    netValueD[i].percentToPrev = Highcharts.numberFormat((data[i][1] - data[i - 1][1]) * 100 / data[i - 1][1], 2);
 	  }
 	  // refIdxD
 	  refIdxD[i] = {};

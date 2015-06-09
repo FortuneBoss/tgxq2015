@@ -123,7 +123,7 @@
 		{type: 'checkbox'},
 		{readOnly: true}, // id
 		{type: 'date', dateFormat: 'yymmdd'},
-		{type: 'numeric', format:'0.0000'},
+		{type: 'numeric', format:'0.000000'},
 		{type: 'numeric', format:'0.00'}
 	  ],
 	  startRows: 1,
