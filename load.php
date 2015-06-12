@@ -4,7 +4,7 @@ require_once 'util.php';
 
 function formatDate($val) {
    if ($val > 0) {
-       return $val;
+       return '"' . $val . '"';
    }
    return "null";
 }

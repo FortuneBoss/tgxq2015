@@ -1,5 +1,25 @@
 <?php
-   include('session.php');
+include('fund.config.php');
+include('session.php');
+
+if (isset($_GET["fundId"])) {
+  $fundId = $_GET["fundId"];
+  if (!check_and_select_fundId($fundId, $g_authFunds)) {
+    die("not authrized");
+  }
+}
+$fundId=$_SESSION['fundId'];
+$selectHtml = "<select id='fundSel'>";
+foreach($g_authFunds as $authFundId) {
+  if (array_key_exists($authFundId, $g_funds)) {
+    $selected = "";
+    if ($fundId == $authFundId) {
+      $selected = " selected";
+    }
+    $selectHtml .= "<option value='" . $authFundId . "'" . $selected . ">" . $g_funds[$authFundId] . "</option>";
+  }
+}
+$selectHtml .= "</select>";
 ?>
 <html>
   <head>
@@ -11,7 +31,7 @@
 	<script type="text/javascript" src="js/spin.min.js"></script>
 	<script type="text/javascript" src="js/jquery.spin.js"></script>
 	<link rel="stylesheet" href="js/jquery.handsontable.full.css">
-	<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css">
+	<link rel="stylesheet" href="js/jquery-ui/css/ui-bootstrap/jquery-ui.custom.css">
 	<link rel="stylesheet" href="css.css">
   </head>
   <body>
@@ -23,9 +43,7 @@
 		  <button name="del">删除</button>
 		</div>
 		切换基金:
-		  <select name="fundId">
-			<option value="1">tgxq2015</option>
-		  </select>
+		<?php echo $selectHtml ?>
 		  <button name="change_fund">确定</button>
 		  <span id="console"></span>
 		</div>
@@ -241,7 +259,12 @@
 	  return selectedIds;
 	}
 
-	// add stock
+	$parent.find('button[name=change_fund]').click(function(){
+	  location.href = "nv.php?fundId=" + $("#fundSel").val();
+	  return false;
+	});
+
+	// add
 	$parent.find('button[name=add]').click(function(){
 	  startSpin();
       $console.text('Adding...');
