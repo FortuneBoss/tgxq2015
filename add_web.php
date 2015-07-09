@@ -15,5 +15,5 @@ function add($fundId) {
     return $result;
 }
 
-$result = add($fundId);
+$result = add($g_fundId);
 display($result);

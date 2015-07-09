@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-<title>TGXQ2015 Net Value 基金净值</title>
+<title>ZL Net Value</title>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui/js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="js/highstocks.js"></script>
@@ -12,7 +12,7 @@
 <body>
 	<div id="container" style="height: 650px; min-width: 500px"></div>
 	<script>
-var fundId = "1";
+var fundId = "2";
 $(function () {
   $.ajax({
     url: 'data.php?fundId=' + fundId,
@@ -82,7 +82,7 @@ $(function () {
 	    '#a6c96a'],
 
 	  title: {
-	    text: 'TGXQ2015 Net Value'
+	    text: 'ZL Net Value'
 	  },
 
 	  yAxis: [{

@@ -10,7 +10,7 @@ foreach($data as $id) {
     $ids .= ',' . $id;
 }
 
-$items = R::find('nv', ' fund_id=? and id in (' . $ids . ')', [$fundId]);
+$items = R::find('nv', ' fund_id=? and id in (' . $ids . ')', [$g_fundId]);
 $deleted = [];
 foreach($items as $item) {
     $deleted[] = $item->id;
