@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-<title>TGXQ2015 Net Value</title>
+<title>TGXQ2015 Net Value 基金净值</title>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui/js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="js/highstocks.js"></script>
