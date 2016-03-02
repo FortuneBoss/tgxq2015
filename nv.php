@@ -8,7 +8,7 @@ if (isset($_GET["fundId"])) {
     die("not authrized");
   }
 }
-$fundId=$_SESSION['fundId'];
+$fundId=$_COOKIE['fundId'];
 $selectHtml = "<select id='fundSel'>";
 foreach($g_authFunds as $authFundId) {
   if (array_key_exists($authFundId, $g_funds)) {

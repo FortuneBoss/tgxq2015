@@ -14,12 +14,12 @@ if (isset($_POST['submit'])) {
         $acct = R::findOne('admin_account', ' uname=? AND upass=?', [$username, $password] );
         if ($acct != NULL) {
 			if (trim($acct->authfunds) != "") {
-				session_start(); // Starting Session
-                $_SESSION['login_user']=$username; // Initializing Session
-                $_SESSION['uid']=$acct->uid;
+				$expire = time() + 86400;
+				setcookie("login_user", $username, $expire);
+				setcookie("uid", $acct->uid, $expire);
                 $authFunds = explode(",", ($acct->authfunds));
-				$_SESSION['authFunds']=$authFunds;
-                $_SESSION['fundId']=$authFunds[0];
+				setcookie("authFunds", $authFunds, $expire);
+				setcookie("fundId", $authFunds[0], $expire);
 				header("location: nv.php"); // Redirecting To Other Page
 			} else {
 				$error = "No authorization.";
