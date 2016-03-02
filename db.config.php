@@ -11,10 +11,10 @@ $db_upass=getenv('MYSQL_PASSWORD');
 // var_dump($db_name);
 // var_dump($db_uname);
 // var_dump($db_upass);
-$dsn='mysql:host='.$db_host.';port='.$db_port.';dbname='.$db_name;
-// $dsn='mysql:host=localhost;dbname=zerohf';
-// $db_uname='zerohf';
-// $db_upass='zerohf2015';
+//$dsn='mysql:host='.$db_host.';port='.$db_port.';dbname='.$db_name;
+ $dsn='mysql:host=localhost;dbname=zerohf';
+ $db_uname='zerohf';
+ $db_upass='zerohf2015';
 // var_dump($dsn);
 R::setup($dsn,$db_uname,$db_upass);
 }
